@@ -40,31 +40,29 @@
                 <div class="stats-grid">
                     <div class="stat-dashboard-card">
                         <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
-                        <div class="stat-number-dash">{{ totalBookings }}</div>
+                        <div class="stat-number-dash">120</div>
                         <div class="stat-label-dash">إجمالي الحجوزات | Total Bookings</div>
-                        <div class="stat-trend"><i class="fas fa-chart-simple"></i> +{{ newBookingsThisMonth }} هذا
-                            الشهر</div>
+                        <div class="stat-trend"><i class="fas fa-chart-simple"></i> +15 هذا الشهر</div>
                     </div>
                     <div class="stat-dashboard-card">
                         <div class="stat-icon"><i class="fas fa-user-friends"></i></div>
-                        <div class="stat-number-dash">{{ uniqueClients }}</div>
+                        <div class="stat-number-dash">80</div>
                         <div class="stat-label-dash">عملاء فريدون | Unique Clients</div>
                         <div class="stat-trend"><i class="fas fa-heart"></i> قاعدة عملاء متنوعة</div>
                     </div>
                     <div class="stat-dashboard-card">
                         <div class="stat-icon"><i class="fas fa-phone-alt"></i></div>
-                        <div class="stat-number-dash">{{ contactedCount }}</div>
+                        <div class="stat-number-dash">50</div>
                         <div class="stat-label-dash">تم التواصل معهم | Contacted</div>
-                        <div class="stat-trend"><i class="fas fa-check-circle"></i> نسبة تواصل {{ contactRate }}%</div>
+                        <div class="stat-trend"><i class="fas fa-check-circle"></i> نسبة تواصل 62%</div>
                     </div>
                     <div class="stat-dashboard-card">
                         <div class="stat-icon"><i class="fas fa-smile"></i></div>
-                        <div class="stat-number-dash">{{ satisfactionRate }}%</div>
+                        <div class="stat-number-dash">95%</div>
                         <div class="stat-label-dash">رضا العملاء | Satisfaction</div>
                         <div class="stat-trend"><i class="fas fa-star"></i> بناءً على التقييمات</div>
                     </div>
                 </div>
-
                 <!-- Charts Row -->
                 <div class="charts-row">
                     <div class="chart-box">
@@ -108,27 +106,42 @@
                             </thead>
                             <tbody>
                                 <tr v-for="booking in filteredBookings" :key="booking.id">
-                                    <td>{{ booking . fullName }}</td>
-                                    <td>{{ booking . email }}</td>
-                                    <td><span class="contact-badge">{{ booking . contactMethodDisplay }}</span></td>
-                                    <td>{{ booking . challengeShort }}</td>
-                                    <td>
-                                        <span class="status-badge" :class="{
-                                        'status-pending': booking.status === 'pending',
-                                        'status-contacted': booking.status === 'contacted',
-                                        'status-completed': booking.status === 'completed'
-                                    }">
-                                            {{ getStatusText(booking . status) }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <button class="action-btn" @click="updateStatus(booking.id, 'contacted')"
-                                            title="تم التواصل"><i class="fas fa-phone-alt"></i></button>
-                                        <button class="action-btn" @click="updateStatus(booking.id, 'completed')"
-                                            title="مكتمل"><i class="fas fa-check-circle"></i></button>
-                                        <button class="action-btn" @click="viewDetails(booking)" title="تفاصيل"><i
-                                                class="fas fa-eye"></i></button>
-                                    </td>
+                                    <tr>
+        <td>أحمد علي</td>
+        <td>ahmed@example.com</td>
+        <td><span class="contact-badge">Email</span></td>
+        <td>تحدي 1</td>
+        <td><span class="status-badge status-pending">قيد الانتظار</span></td>
+        <td>
+            <button class="action-btn" title="تم التواصل"><i class="fas fa-phone-alt"></i></button>
+            <button class="action-btn" title="مكتمل"><i class="fas fa-check-circle"></i></button>
+            <button class="action-btn" title="تفاصيل"><i class="fas fa-eye"></i></button>
+        </td>
+    </tr>
+    <tr>
+        <td>سارة محمد</td>
+        <td>sara@example.com</td>
+        <td><span class="contact-badge">Phone</span></td>
+        <td>تحدي 2</td>
+        <td><span class="status-badge status-contacted">تم التواصل</span></td>
+        <td>
+            <button class="action-btn" title="تم التواصل"><i class="fas fa-phone-alt"></i></button>
+            <button class="action-btn" title="مكتمل"><i class="fas fa-check-circle"></i></button>
+            <button class="action-btn" title="تفاصيل"><i class="fas fa-eye"></i></button>
+        </td>
+    </tr>
+    <tr>
+        <td>خالد حسن</td>
+        <td>khaled@example.com</td>
+        <td><span class="contact-badge">WhatsApp</span></td>
+        <td>تحدي 3</td>
+        <td><span class="status-badge status-completed">مكتمل</span></td>
+        <td>
+            <button class="action-btn" title="تم التواصل"><i class="fas fa-phone-alt"></i></button>
+            <button class="action-btn" title="مكتمل"><i class="fas fa-check-circle"></i></button>
+            <button class="action-btn" title="تفاصيل"><i class="fas fa-eye"></i></button>
+        </td>
+    </tr>
                                 </tr>
                                 <tr v-if="filteredBookings.length === 0">
                                     <td colspan="6" style="text-align:center;">لا توجد حجوزات | No bookings found</td>

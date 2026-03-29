@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Vue 3 CDN -->
     <script src="https://unpkg.com/vue@3.3.4/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link rel="stylesheet" href="{{ asset('site-assets/css/login.css') }}">
 </head>
 
@@ -19,8 +20,10 @@
         <div class="login-container">
             <div class="login-card">
                 <div class="login-header">
-                    <div class="logo-icon">
-                        <i class="fas fa-heartbeat"></i>
+                    <div class="logo-icon" style="background-color: #fff ">
+
+                        <img style="max-width: 150px ; max-height:150px"
+                            src="{{ asset('site-assets/img/baytak-logo.png') }}" alt="">
                     </div>
                     <h1>بيتك | Bytak</h1>
                     <p>بيتك النفسي الآمن | Your Safe Psychological Space</p>
@@ -30,7 +33,7 @@
                 </div>
 
                 <div class="login-form-section">
-                    <!-- Error/Success Messages -->
+                    {{-- <!-- Error/Success Messages -->
                     <div v-if="errorMessage" class="error-message">
                         <i class="fas fa-exclamation-circle"></i>
                         <span>{{ errorMessage }}</span>
@@ -38,9 +41,10 @@
                     <div v-if="successMessage" class="success-message">
                         <i class="fas fa-check-circle"></i>
                         <span>{{ successMessage }}</span>
-                    </div>
+                    </div> --}}
 
-                    <form @submit.prevent="handleLogin">
+                    <form  method="POST" action="{{ route('admin.login.submit') }}">
+                        @csrf
                         <!-- البريد الإلكتروني | Email -->
                         <div class="input-group">
                             <div class="bilingual-label">
@@ -79,7 +83,8 @@
 
                         <button type="submit" class="btn-login" :disabled="loading">
                             <i class="fas fa-sign-in-alt"></i>
-                            {{ loading ? 'جاري تسجيل الدخول... | Logging in...' : 'دخول إلى لوحة التحكم | Login to Dashboard' }}
+                            {{-- {{ loading ? 'جاري تسجيل الدخول... | Logging in...' : 'دخول إلى لوحة التحكم | Login to
+                            Dashboard' }} --}}
                         </button>
                     </form>
 
@@ -103,7 +108,7 @@
         </div>
     </div>
 
- <script src="{{asset('site-assets/js/login.js')}}"></script>
+    <script src="{{asset('site-assets/js/login.js')}}"></script>
 </body>
 
 </html>

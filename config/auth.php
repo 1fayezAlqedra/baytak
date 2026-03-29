@@ -42,8 +42,13 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-    ],
 
+        // Guard للوحة التحكم (Admin)
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+    ],
     /*
     |--------------------------------------------------------------------------
     | User Providers
