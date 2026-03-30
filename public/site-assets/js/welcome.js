@@ -122,17 +122,39 @@ createApp({
             }
 
             // Here you can integrate API call if needed
-            console.log("Form Data (Vue 3):", {
-                fullName: form.value.fullName,
-                email: form.value.email,
-                phone: form.value.phone,
-                challenge: form.value.challenge,
-                goals: form.value.goals,
-                contactMethod:
-                    form.value.contactMethod === "other"
-                        ? form.value.otherContactMethod
-                        : form.value.contactMethod,
-            });
+            axios
+                .post("/booking", {
+                    full_name: form.value.fullName,
+                    email: form.value.email,
+                    phone: form.value.phone,
+                    challenge: form.value.challenge,
+                    goals: form.value.goals,
+
+                    contact_method:
+                        form.value.contactMethod === "other"
+                            ? form.value.otherContactMethod
+                            : form.value.contactMethod,
+                })
+                .then((response) => {
+                    console.log(response.data);
+
+                    // نجاح
+                    submittedSuccess.value = true;
+
+                    // scroll
+                    setTimeout(() => {
+                        window.scrollTo({
+                            top: document.body.scrollHeight,
+                            behavior: "smooth",
+                        });
+                    }, 100);
+                })
+                .catch((error) => {
+                    console.log(error.response.data);
+
+                    // ممكن تعرض error للمستخدم
+                    alert("حدث خطأ، حاول مرة أخرى");
+                });
 
             submittedSuccess.value = true;
             // Reset success message after 5 seconds
