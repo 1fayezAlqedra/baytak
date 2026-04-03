@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\BookingMail;
 use App\Models\Booking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
 {
@@ -35,6 +37,16 @@ class BookingController extends Controller
             }
 
             Booking::create($validated);
+            $patientData = [
+                'name' => $request->full_name ?? 'غير محدد',
+                'age' => $request->age ?? 'غير محدد',
+                'phone' => $request->phone ?? 'غير محدد',
+                'apply_date' => now()->format('Y-m-d H:i'),
+            ];
+
+            Mail::to('fayez.mona123@gmail.com')->send(new BookingMail($patientData));
+            // إرسال الإيميل
+            Mail::to('fayez.mona123@gmail.com')->send(new BookingMail($patientData));
 
             return response()->json([
                 'message' => 'Success'

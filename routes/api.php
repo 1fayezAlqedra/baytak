@@ -7,3 +7,4 @@ Route::get('/bookings', function () {
 });
 Route::patch('/bookings/{id}/status', [BookingController::class, 'updateStatus']);
 Route::get('/weekly-stats', [BookingController::class, 'weeklyStats']);
+Route::post('/booking', [BookingController::class, 'store']);
