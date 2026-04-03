@@ -28,3 +28,4 @@ Route::get('/booking', [BookingController::class, 'showBookingForm'])->name('boo
 Route::post('/booking', [BookingController::class, 'submitBooking'])->name('booking.submit');
 
 
+

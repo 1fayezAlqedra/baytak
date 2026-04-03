@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
+
+
     public function showBookingForm()
     {
 
@@ -38,5 +40,18 @@ class BookingController extends Controller
                 'message' => 'Success'
             ]);
         }
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $booking = Booking::findOrFail($id);
+
+        $booking->status = $request->status;
+        $booking->save();
+
+        return response()->json([
+            'message' => 'Status updated successfully',
+            'booking' => $booking
+        ]);
     }
 }

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Vue 3 CDN -->
     <script src="https://unpkg.com/vue@3.3.4/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Chart.js for simple charts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="{{ asset('site-assets/css/index.css') }}">
@@ -104,49 +105,71 @@
                                     <th>الإجراءات | Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr v-for="booking in filteredBookings" :key="booking.id">
-                                    <tr>
-        <td>أحمد علي</td>
-        <td>ahmed@example.com</td>
-        <td><span class="contact-badge">Email</span></td>
-        <td>تحدي 1</td>
-        <td><span class="status-badge status-pending">قيد الانتظار</span></td>
-        <td>
-            <button class="action-btn" title="تم التواصل"><i class="fas fa-phone-alt"></i></button>
-            <button class="action-btn" title="مكتمل"><i class="fas fa-check-circle"></i></button>
-            <button class="action-btn" title="تفاصيل"><i class="fas fa-eye"></i></button>
-        </td>
-    </tr>
-    <tr>
-        <td>سارة محمد</td>
-        <td>sara@example.com</td>
-        <td><span class="contact-badge">Phone</span></td>
-        <td>تحدي 2</td>
-        <td><span class="status-badge status-contacted">تم التواصل</span></td>
-        <td>
-            <button class="action-btn" title="تم التواصل"><i class="fas fa-phone-alt"></i></button>
-            <button class="action-btn" title="مكتمل"><i class="fas fa-check-circle"></i></button>
-            <button class="action-btn" title="تفاصيل"><i class="fas fa-eye"></i></button>
-        </td>
-    </tr>
-    <tr>
-        <td>خالد حسن</td>
-        <td>khaled@example.com</td>
-        <td><span class="contact-badge">WhatsApp</span></td>
-        <td>تحدي 3</td>
-        <td><span class="status-badge status-completed">مكتمل</span></td>
-        <td>
-            <button class="action-btn" title="تم التواصل"><i class="fas fa-phone-alt"></i></button>
-            <button class="action-btn" title="مكتمل"><i class="fas fa-check-circle"></i></button>
-            <button class="action-btn" title="تفاصيل"><i class="fas fa-eye"></i></button>
-        </td>
-    </tr>
-                                </tr>
-                                <tr v-if="filteredBookings.length === 0">
-                                    <td colspan="6" style="text-align:center;">لا توجد حجوزات | No bookings found</td>
-                                </tr>
-                            </tbody>
+                            @verbatim
+                                <tbody>
+                                    <tr v-for="booking in filteredBookings" :key="booking.id">
+                                        <td>{{ booking . fullName }}</td>
+                                        <td>{{ booking . email }}</td>
+
+                                        <td>
+                                            <span class="contact-badge">
+                                                {{ booking . contactMethod }}
+                                            </span>
+                                        </td>
+
+                                        <td>{{ booking . challenge }}</td>
+
+                                        <td>
+                                            <span class="status-badge">
+                                                {{ getStatusText(booking . status) }}
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <button @click="updateStatus(booking.id, 'contacted')" style="
+                                        background: linear-gradient(135deg, #4caf50, #2e7d32) !important;
+                                        color: white !important;
+                                        border: none !important;
+                                        padding: 8px 12px !important;
+                                        margin: 0 4px;
+                                        border-radius: 10px;
+                                        cursor: pointer;
+                                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                                    ">
+                                                📞
+                                            </button>
+
+                                            <button @click="updateStatus(booking.id, 'completed')" style="
+                                        background: linear-gradient(135deg, #2196f3, #1565c0) !important;
+                                        color: white !important;
+                                        border: none !important;
+                                        padding: 8px 12px !important;
+                                        margin: 0 4px;
+                                        border-radius: 10px;
+                                        cursor: pointer;
+                                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                                    ">
+                                                ✔
+                                            </button>
+
+                                            <button @click="viewDetails(booking)" style="
+                                        background: linear-gradient(135deg, #ff9800, #ef6c00) !important;
+                                        color: white !important;
+                                        border: none !important;
+                                        padding: 8px 12px !important;
+                                        margin: 0 4px;
+                                        border-radius: 10px;
+                                        cursor: pointer;
+                                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                                    ">
+                                                👁
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            @endverbatim<td>
+
                         </table>
                     </div>
                 </div>
