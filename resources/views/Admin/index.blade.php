@@ -41,27 +41,27 @@
                 <div class="stats-grid">
                     <div class="stat-dashboard-card">
                         <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
-                        <div class="stat-number-dash">120</div>
+                        <div class="stat-number-dash">{{ $totalBookings }}</div>
                         <div class="stat-label-dash">إجمالي الحجوزات | Total Bookings</div>
                         <div class="stat-trend"><i class="fas fa-chart-simple"></i> +15 هذا الشهر</div>
                     </div>
                     <div class="stat-dashboard-card">
                         <div class="stat-icon"><i class="fas fa-user-friends"></i></div>
-                        <div class="stat-number-dash">80</div>
-                        <div class="stat-label-dash">عملاء فريدون | Unique Clients</div>
+                        <div class="stat-number-dash">{{ $contacted }}</div>
+                        <div class="stat-label-dash">تم التواصل معهم | contacted</div>
                         <div class="stat-trend"><i class="fas fa-heart"></i> قاعدة عملاء متنوعة</div>
                     </div>
                     <div class="stat-dashboard-card">
                         <div class="stat-icon"><i class="fas fa-phone-alt"></i></div>
-                        <div class="stat-number-dash">50</div>
-                        <div class="stat-label-dash">تم التواصل معهم | Contacted</div>
-                        <div class="stat-trend"><i class="fas fa-check-circle"></i> نسبة تواصل 62%</div>
+                        <div class="stat-number-dash">{{$completed}}</div>
+                        <div class="stat-label-dash">تم إكمال التواصل | completed</div>
+                        <div class="stat-trend"><i class="fas fa-check-circle"></i> نسبة تواصل {{$contactRate}}%</div>
                     </div>
                     <div class="stat-dashboard-card">
                         <div class="stat-icon"><i class="fas fa-smile"></i></div>
-                        <div class="stat-number-dash">95%</div>
-                        <div class="stat-label-dash">رضا العملاء | Satisfaction</div>
-                        <div class="stat-trend"><i class="fas fa-star"></i> بناءً على التقييمات</div>
+                        <div class="stat-number-dash">{{ $pending }}</div>
+                        <div class="stat-label-dash"> عدد المرضى الانتظار | Pending</div>
+                        <div class="stat-trend"><i class="fas fa-star"></i> نسبة تواصل {{ $pendingRate }} %</div>
                     </div>
                 </div>
                 <!-- Charts Row -->
@@ -74,7 +74,7 @@
                     <div class="chart-box">
                         <div class="chart-title"><i class="fas fa-chart-line"></i> الحجوزات الأسبوعية | Weekly Bookings
                         </div>
-                        <canvas id="weeklyBookingsChart" width="400" height="250"></canvas>
+                        <canvas id="weeklyChart" width="400" height="250"></canvas>
                     </div>
                 </div>
 
@@ -127,41 +127,41 @@
 
                                         <td>
                                             <button @click="updateStatus(booking.id, 'contacted')" style="
-                                        background: linear-gradient(135deg, #4caf50, #2e7d32) !important;
-                                        color: white !important;
-                                        border: none !important;
-                                        padding: 8px 12px !important;
-                                        margin: 0 4px;
-                                        border-radius: 10px;
-                                        cursor: pointer;
-                                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-                                    ">
+                                                                                            background: linear-gradient(135deg, #4caf50, #2e7d32) !important;
+                                                                                            color: white !important;
+                                                                                            border: none !important;
+                                                                                            padding: 8px 12px !important;
+                                                                                            margin: 0 4px;
+                                                                                            border-radius: 10px;
+                                                                                            cursor: pointer;
+                                                                                            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                                                                                        ">
                                                 📞
                                             </button>
 
                                             <button @click="updateStatus(booking.id, 'completed')" style="
-                                        background: linear-gradient(135deg, #2196f3, #1565c0) !important;
-                                        color: white !important;
-                                        border: none !important;
-                                        padding: 8px 12px !important;
-                                        margin: 0 4px;
-                                        border-radius: 10px;
-                                        cursor: pointer;
-                                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-                                    ">
+                                                                                            background: linear-gradient(135deg, #2196f3, #1565c0) !important;
+                                                                                            color: white !important;
+                                                                                            border: none !important;
+                                                                                            padding: 8px 12px !important;
+                                                                                            margin: 0 4px;
+                                                                                            border-radius: 10px;
+                                                                                            cursor: pointer;
+                                                                                            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                                                                                        ">
                                                 ✔
                                             </button>
 
                                             <button @click="viewDetails(booking)" style="
-                                        background: linear-gradient(135deg, #ff9800, #ef6c00) !important;
-                                        color: white !important;
-                                        border: none !important;
-                                        padding: 8px 12px !important;
-                                        margin: 0 4px;
-                                        border-radius: 10px;
-                                        cursor: pointer;
-                                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-                                    ">
+                                                                                            background: linear-gradient(135deg, #ff9800, #ef6c00) !important;
+                                                                                            color: white !important;
+                                                                                            border: none !important;
+                                                                                            padding: 8px 12px !important;
+                                                                                            margin: 0 4px;
+                                                                                            border-radius: 10px;
+                                                                                            cursor: pointer;
+                                                                                            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                                                                                        ">
                                                 👁
                                             </button>
                                         </td>

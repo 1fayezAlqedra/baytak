@@ -41,7 +41,19 @@ class BookingController extends Controller
             ]);
         }
     }
+    public function weeklyStats()
+    {
+        $data = \App\Models\Booking::selectRaw('DATE(created_at) as date, COUNT(*) as total')
+            ->whereBetween('created_at', [
+                now()->startOfWeek(),
+                now()->endOfWeek()
+            ])
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
 
+        return response()->json($data);
+    }
     public function updateStatus(Request $request, $id)
     {
         $booking = Booking::findOrFail($id);
