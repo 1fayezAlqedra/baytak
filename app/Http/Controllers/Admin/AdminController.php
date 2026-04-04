@@ -9,13 +9,14 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    public function index()
-    {
-        return response()->json(
-            Booking::orderBy('created_at', 'desc')->get()
-        );
+public function index(Request $request)
+{
+    $perPage = $request->get('per_page', 10);
 
-    }
+    $bookings = \App\Models\Booking::latest()->paginate($perPage);
+
+    return response()->json($bookings);
+}
 
     public function showLoginForm()
     {

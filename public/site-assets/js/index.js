@@ -2,14 +2,17 @@ const { createApp, ref, computed, onMounted, watch } = Vue;
 
 createApp({
     setup() {
-
         // 🌐 API
-        axios.defaults.baseURL = "http://127.0.0.1:8000";
+        axios.defaults.baseURL = "http://127.0.0.1:8000/api";
 
         // 📦 البيانات
         const bookings = ref([]);
         const filterStatus = ref("all");
         const loadingId = ref(null);
+
+        // 📄 Pagination
+        const currentPage = ref(1);
+        const lastPage = ref(1);
 
         // 📊 Charts
         let contactChart = null;
@@ -18,11 +21,12 @@ createApp({
         const labels = ref([]);
         const values = ref([]);
 
-        // 📡 جلب الحجوزات
-        const fetchBookings = () => {
-            axios.get("/api/bookings")
+        // 📡 جلب الحجوزات (🔥 تم التعديل)
+        const fetchBookings = (page = 1) => {
+            axios
+                .get(`/bookings?page=${page}&per_page=10`)
                 .then((res) => {
-                    bookings.value = res.data.map((b) => ({
+                    bookings.value = res.data.data.map((b) => ({
                         ...b,
                         fullName: b.full_name,
                         contactMethod: b.contact_method,
@@ -36,31 +40,36 @@ createApp({
                                 ? "💬 WhatsApp"
                                 : "📞 Phone",
                     }));
-                });
+
+                    currentPage.value = res.data.current_page;
+                    lastPage.value = res.data.last_page;
+                })
+                .catch(() => {});
         };
 
         // 🔄 تحديث الحالة
         const updateStatus = (id, status) => {
             loadingId.value = id;
 
-            axios.patch(`/api/bookings/${id}/status`, { status })
+            axios
+                .patch(`/bookings/${id}/status`, { status })
                 .then(() => {
-                    const booking = bookings.value.find(b => b.id === id);
+                    const booking = bookings.value.find((b) => b.id === id);
                     if (booking) booking.status = status;
                 })
-                .finally(() => loadingId.value = null);
+                .finally(() => (loadingId.value = null));
         };
 
         // 📊 إحصائيات
         const totalBookings = computed(() => bookings.value.length);
 
-        const uniqueClients = computed(() =>
-            new Set(bookings.value.map(b => b.email)).size
+        const uniqueClients = computed(
+            () => new Set(bookings.value.map((b) => b.email)).size
         );
 
         const contactedCount = computed(() =>
-            bookings.value.filter(b =>
-                b.status === "contacted" || b.status === "completed"
+            bookings.value.filter(
+                (b) => b.status === "contacted" || b.status === "completed"
             ).length
         );
 
@@ -71,7 +80,7 @@ createApp({
         );
 
         const pendingCount = computed(() =>
-            bookings.value.filter(b => b.status === "pending").length
+            bookings.value.filter((b) => b.status === "pending").length
         );
 
         const pendingRate = computed(() =>
@@ -83,14 +92,16 @@ createApp({
         // 🔍 فلترة
         const filteredBookings = computed(() => {
             if (filterStatus.value === "all") return bookings.value;
-            return bookings.value.filter(b => b.status === filterStatus.value);
+            return bookings.value.filter(
+                (b) => b.status === filterStatus.value
+            );
         });
 
         // 📞 طرق التواصل
         const contactMethodStats = computed(() => {
             const stats = { email: 0, whatsapp: 0, phone: 0 };
 
-            bookings.value.forEach(b => {
+            bookings.value.forEach((b) => {
                 if (b.contactMethod === "email") stats.email++;
                 else if (b.contactMethod === "whatsapp") stats.whatsapp++;
                 else stats.phone++;
@@ -110,26 +121,27 @@ createApp({
                 type: "doughnut",
                 data: {
                     labels: ["Email", "WhatsApp", "Phone"],
-                    datasets: [{
-                        data: [
-                            contactMethodStats.value.email,
-                            contactMethodStats.value.whatsapp,
-                            contactMethodStats.value.phone,
-                        ]
-                    }]
-                }
+                    datasets: [
+                        {
+                            data: [
+                                contactMethodStats.value.email,
+                                contactMethodStats.value.whatsapp,
+                                contactMethodStats.value.phone,
+                            ],
+                        },
+                    ],
+                },
             });
         };
 
         // 📈 جلب بيانات الأسبوع
         const fetchWeeklyStats = () => {
-            axios.get("/api/weekly-stats")
-                .then(res => {
-                    labels.value = res.data.map(i => i.date);
-                    values.value = res.data.map(i => i.total);
+            axios.get("/weekly-stats").then((res) => {
+                labels.value = res.data.map((i) => i.date);
+                values.value = res.data.map((i) => i.total);
 
-                    renderWeeklyChart();
-                });
+                renderWeeklyChart();
+            });
         };
 
         // 📈 رسم Line Chart
@@ -143,13 +155,15 @@ createApp({
                 type: "line",
                 data: {
                     labels: labels.value,
-                    datasets: [{
-                        label: "الحجوزات الأسبوعية",
-                        data: values.value,
-                        borderWidth: 2,
-                        tension: 0.4
-                    }]
-                }
+                    datasets: [
+                        {
+                            label: "الحجوزات الأسبوعية",
+                            data: values.value,
+                            borderWidth: 2,
+                            tension: 0.4,
+                        },
+                    ],
+                },
             });
         };
 
@@ -158,7 +172,7 @@ createApp({
             const map = {
                 pending: "قيد الانتظار",
                 contacted: "تم التواصل",
-                completed: "مكتمل"
+                completed: "مكتمل",
             };
             return map[status] || status;
         };
@@ -173,13 +187,26 @@ createApp({
             `);
         };
 
+        // 🔘 Pagination Buttons
+        const nextPage = () => {
+            if (currentPage.value < lastPage.value) {
+                fetchBookings(currentPage.value + 1);
+            }
+        };
+
+        const prevPage = () => {
+            if (currentPage.value > 1) {
+                fetchBookings(currentPage.value - 1);
+            }
+        };
+
         // 🚀 عند التحميل
         onMounted(() => {
             fetchBookings();
             fetchWeeklyStats();
         });
 
-        // 👀 تحديث charts عند تغيير البيانات
+        // 👀 تحديث charts
         watch(bookings, () => {
             renderContactChart();
         });
@@ -199,7 +226,12 @@ createApp({
             updateStatus,
             getStatusText,
             viewDetails,
-            loadingId
+            loadingId,
+
+            currentPage,
+            lastPage,
+            nextPage,
+            prevPage,
         };
-    }
+    },
 }).mount("#app");

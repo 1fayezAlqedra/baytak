@@ -127,41 +127,41 @@
 
                                         <td>
                                             <button @click="updateStatus(booking.id, 'contacted')" style="
-                                                                                            background: linear-gradient(135deg, #4caf50, #2e7d32) !important;
-                                                                                            color: white !important;
-                                                                                            border: none !important;
-                                                                                            padding: 8px 12px !important;
-                                                                                            margin: 0 4px;
-                                                                                            border-radius: 10px;
-                                                                                            cursor: pointer;
-                                                                                            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-                                                                                        ">
+                                                                                                                background: linear-gradient(135deg, #4caf50, #2e7d32) !important;
+                                                                                                                color: white !important;
+                                                                                                                border: none !important;
+                                                                                                                padding: 8px 12px !important;
+                                                                                                                margin: 0 4px;
+                                                                                                                border-radius: 10px;
+                                                                                                                cursor: pointer;
+                                                                                                                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                                                                                                            ">
                                                 📞
                                             </button>
 
                                             <button @click="updateStatus(booking.id, 'completed')" style="
-                                                                                            background: linear-gradient(135deg, #2196f3, #1565c0) !important;
-                                                                                            color: white !important;
-                                                                                            border: none !important;
-                                                                                            padding: 8px 12px !important;
-                                                                                            margin: 0 4px;
-                                                                                            border-radius: 10px;
-                                                                                            cursor: pointer;
-                                                                                            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-                                                                                        ">
+                                                                                                                background: linear-gradient(135deg, #2196f3, #1565c0) !important;
+                                                                                                                color: white !important;
+                                                                                                                border: none !important;
+                                                                                                                padding: 8px 12px !important;
+                                                                                                                margin: 0 4px;
+                                                                                                                border-radius: 10px;
+                                                                                                                cursor: pointer;
+                                                                                                                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                                                                                                            ">
                                                 ✔
                                             </button>
 
                                             <button @click="viewDetails(booking)" style="
-                                                                                            background: linear-gradient(135deg, #ff9800, #ef6c00) !important;
-                                                                                            color: white !important;
-                                                                                            border: none !important;
-                                                                                            padding: 8px 12px !important;
-                                                                                            margin: 0 4px;
-                                                                                            border-radius: 10px;
-                                                                                            cursor: pointer;
-                                                                                            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-                                                                                        ">
+                                                                                                                background: linear-gradient(135deg, #ff9800, #ef6c00) !important;
+                                                                                                                color: white !important;
+                                                                                                                border: none !important;
+                                                                                                                padding: 8px 12px !important;
+                                                                                                                margin: 0 4px;
+                                                                                                                border-radius: 10px;
+                                                                                                                cursor: pointer;
+                                                                                                                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                                                                                                            ">
                                                 👁
                                             </button>
                                         </td>
@@ -173,7 +173,19 @@
                         </table>
                     </div>
                 </div>
+                @verbatim
+                    <div class="pagination">
+                        <button @click="prevPage">
+                            previous  ||  السابق
+                        </button>
 
+                        <span>صفحة {{ currentPage }} من {{ lastPage }}</span>
+
+                        <button @click="nextPage">
+                            next  || التالي
+                        </button>
+                    </div>
+                @endverbatim
                 <footer>
                     <div>💚 بيتك | Bytak — نقدم خدمات متكاملة للصحة النفسية | Integrated mental health services</div>
                     <div style="margin-top:6px;">نساعدك على تخطي عقبات حياتك | Helping you overcome life's obstacles
