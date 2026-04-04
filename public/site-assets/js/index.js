@@ -21,7 +21,7 @@ createApp({
         const labels = ref([]);
         const values = ref([]);
 
-        // 📡 جلب الحجوزات (🔥 تم التعديل)
+        // 📡 جلب الحجوزات
         const fetchBookings = (page = 1) => {
             axios
                 .get(`/bookings?page=${page}&per_page=10`)
@@ -44,7 +44,7 @@ createApp({
                     currentPage.value = res.data.current_page;
                     lastPage.value = res.data.last_page;
                 })
-                .catch(() => {});
+                .catch((err) => console.error(err));
         };
 
         // 🔄 تحديث الحالة
@@ -58,6 +58,17 @@ createApp({
                     if (booking) booking.status = status;
                 })
                 .finally(() => (loadingId.value = null));
+        };
+
+        // 🧹 تنظيف الرقم
+        const cleanPhone = (phone) => {
+            if (!phone) return "";
+            return phone.replace(/\D/g, "");
+        };
+
+        // ✉️ فتح الإيميل
+        const emailLink = (email) => {
+            return `mailto:${email}`;
         };
 
         // 📊 إحصائيات
@@ -110,7 +121,7 @@ createApp({
             return stats;
         });
 
-        // 📊 رسم Pie Chart
+        // 📊 Pie Chart
         const renderContactChart = () => {
             const ctx = document.getElementById("contactMethodChart");
             if (!ctx) return;
@@ -134,7 +145,7 @@ createApp({
             });
         };
 
-        // 📈 جلب بيانات الأسبوع
+        // 📈 جلب الأسبوع
         const fetchWeeklyStats = () => {
             axios.get("/weekly-stats").then((res) => {
                 labels.value = res.data.map((i) => i.date);
@@ -144,7 +155,7 @@ createApp({
             });
         };
 
-        // 📈 رسم Line Chart
+        // 📈 Line Chart
         const renderWeeklyChart = () => {
             const ctx = document.getElementById("weeklyChart");
             if (!ctx) return;
@@ -187,7 +198,7 @@ createApp({
             `);
         };
 
-        // 🔘 Pagination Buttons
+        // 🔘 Pagination
         const nextPage = () => {
             if (currentPage.value < lastPage.value) {
                 fetchBookings(currentPage.value + 1);
@@ -200,13 +211,13 @@ createApp({
             }
         };
 
-        // 🚀 عند التحميل
+        // 🚀 تحميل أولي
         onMounted(() => {
             fetchBookings();
             fetchWeeklyStats();
         });
 
-        // 👀 تحديث charts
+        // 👀 تحديث الشارت
         watch(bookings, () => {
             renderContactChart();
         });
@@ -232,6 +243,9 @@ createApp({
             lastPage,
             nextPage,
             prevPage,
+
+            cleanPhone,
+            emailLink,
         };
     },
 }).mount("#app");
