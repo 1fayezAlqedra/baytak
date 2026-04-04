@@ -1,75 +1,130 @@
-🧠 Baytak – Mental Health Platform
-📌 Overview
+:
 
-Baytak is a full-stack Mental Health Support Platform designed to provide a safe, modern, and user-friendly environment for users to explore mental well-being, manage appointments, and connect with healthcare services.
+🏥 Bytak System
 
-The platform focuses on improving accessibility to mental health resources while maintaining clean architecture and scalable development practices.
+A modern Booking & Management System built with Laravel (Backend) and Vue.js (Frontend) to efficiently manage client bookings, track status, and visualize analytics.
 
 🚀 Features
-🔐 Secure Authentication (Login / Register)
-👤 Role-based Access (Admin / User / Doctor)
-📅 Appointment Booking System
-🧑‍⚕️ Doctor & Patient Management
-📊 Admin Dashboard with full control
-💬 Clean and responsive UI/UX
-🌐 API-ready architecture
-🏗️ System Architecture
-Backend: Laravel (MVC Architecture)
-Frontend: Vue.js
-Styling: Tailwind CSS
-Database: MySQL
-Auth: Laravel Authentication
-🛠️ Technologies Used
-Laravel
-Vue.js
-Tailwind CSS
-MySQL
-⚙️ Installation & Setup
+📋 Bookings Management
+View all bookings in a structured dashboard
+Pagination support
+Filtering by status
+🔄 Status Control
+Mark bookings as:
+Pending
+Contacted
+Completed
+📊 Analytics Dashboard
+Total bookings
+Unique clients
+Contact rate
+Pending rate
+Weekly booking statistics (Chart.js)
+📱 Smart Contact Integration
+Clickable Email (mailto:)
+WhatsApp redirection (wa.me)
+Clean and responsive contact UI
+⚡ Real-time UI
+Loading states for updates
+Smooth UX interactions
+🧱 Tech Stack
+Backend: Laravel
+Frontend: Vue.js (Composition API)
+HTTP Client: Axios
+Charts: Chart.js
+Styling: Bootstrap / Custom CSS
+📁 Project Structure
+/backend (Laravel)
+ ├── app/
+ ├── routes/
+ ├── app/Http/Controllers/
+ └── database/
 
-1. Clone the repository
-   git clone https://github.com/1fayezAlqedra/baytak.git
-   cd baytak
-2. Install dependencies
-   composer install
-   npm install
-3. Environment setup
-   cp .env.example .env
-   php artisan key:generate
-4. Configure database
+/frontend (Vue)
+ ├── main.js
+ ├── components/
+ └── assets/
+⚙️ Installation
+1️⃣ Clone the project
+git clone https://github.com/your-username/bytak-system.git
+cd bytak-system
+2️⃣ Backend Setup (Laravel)
+cd backend
 
-Update .env:
+composer install
 
-DB_DATABASE=your_database
-DB_USERNAME=root
-DB_PASSWORD= 5. Run migrations
-php artisan migrate 6. Run the application
+cp .env.example .env
+
+php artisan key:generate
+
+php artisan migrate
+
 php artisan serve
+3️⃣ Frontend Setup (Vue)
+cd frontend
+
+npm install
+
 npm run dev
-🧪 Usage
-Register as a new user
-Login to the system
-Book appointments
-Access dashboard based on role
+🔗 API Endpoints
+Method	Endpoint	Description
+GET	/api/bookings	Get all bookings
+PATCH	/api/bookings/{id}/status	Update booking status
+GET	/api/weekly-stats	Get weekly analytics
+📊 Dashboard Overview
+
+The dashboard provides:
+
+📈 Weekly booking trends
+📊 Contact method distribution
+📌 Status tracking
+📋 Full booking list with actions
+📱 Contact Integration
+Email:
+<a href="mailto:user@example.com">Send Email</a>
+WhatsApp:
+<a href="https://wa.me/201234567890" target="_blank">
+  Chat on WhatsApp
+</a>
+🛠️ Environment Variables
+
+Example .env:
+
+APP_NAME=Bytak
+APP_URL=http://127.0.0.1:8000
+
+DB_DATABASE=bytak
+DB_USERNAME=root
+DB_PASSWORD=
 📸 Screenshots
 
-![Login](images/login.png)
-![Dashboard](images/dashboard.png)
-![Booking](images/booking.png)
-🔐 Security Features
-Password hashing
-CSRF protection
-Middleware-based route protection
-Role-based authorization
-📈 Future Improvements
-Real-time notifications
-Chat between users and doctors
-Advanced analytics dashboard
-Mobile application support
+(Add screenshots here from your dashboard for better presentation)
+
+✨ Future Improvements
+🔔 Notifications system
+📧 Email automation
+📱 WhatsApp API integration
+🔐 Authentication & roles
+🌍 Multi-language support
+🤝 Contributing
+
+Contributions are welcome!
+
+Fork the repo
+Create a new branch
+Make your changes
+Submit a pull request
+📄 License
+
+This project is licensed under the MIT License.
+
 👨‍💻 Author
 
 Fayez Emad
-GitHub: 1fayezAlqedra
 
-📄 License
+💼 Backend Developer (PHP / Laravel)
+🌐 Passionate about building scalable systems
+🚀 Always learning and improving
+⭐ Support
 
-This project is for educational and portfolio purposes.
+If you like this project, please give it a ⭐ on GitHub!
