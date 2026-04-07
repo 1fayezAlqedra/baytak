@@ -24,7 +24,7 @@ Route::prefix('admin')->group(function () {
 // ========================
 // صفحة حجز الجلسة التعريفية
 // ========================
-Route::get('/booking', [BookingController::class, 'showBookingForm'])->name('booking.form');
+Route::get('/', [BookingController::class, 'showBookingForm'])->name('booking.form');
 Route::post('/booking', [BookingController::class, 'submitBooking'])->name('booking.submit');
 
 
