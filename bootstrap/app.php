@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Support\Facades\URL; // <-- أضف هذا السطر
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -12,11 +13,20 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias([
+        // 1. حل مشكلة الـ Mixed Content عبر الثقة في الـ Proxy
+        $middleware->trustProxies(at: '*');
 
+        $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
         ]);
     })
-    ->withExceptions(function (Exceptions $exceptions): void {
+    ->withExceptions(function (Exceptions $exceptions) {
         //
-    })->create();
+    })
+    ->booting(function () {
+        // 2. إجبار كل الروابط (assets, routes) على استخدام https في الإنتاج
+        if (app()->environment('production')) {
+            URL::forceScheme('https');
+        }
+    })
+    ->create();
