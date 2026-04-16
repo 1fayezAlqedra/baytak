@@ -10,6 +10,9 @@ createApp({
         const filterStatus = ref("all");
         const loadingId = ref(null);
 
+        // 🔍 البحث
+        const searchQuery = ref("");
+
         // 📄 Pagination
         const currentPage = ref(1);
         const lastPage = ref(1);
@@ -66,17 +69,8 @@ createApp({
             return phone.replace(/\D/g, "");
         };
 
-        // ✉️ فتح الإيميل
-        const emailLink = (email) => {
-            return `mailto:${email}`;
-        };
-
         // 📊 إحصائيات
         const totalBookings = computed(() => bookings.value.length);
-
-        const uniqueClients = computed(
-            () => new Set(bookings.value.map((b) => b.email)).size
-        );
 
         const contactedCount = computed(() =>
             bookings.value.filter(
@@ -100,15 +94,27 @@ createApp({
                 : ((pendingCount.value / totalBookings.value) * 100).toFixed(1)
         );
 
-        // 🔍 فلترة
+        // 🔍 فلترة (🔥 محدثة مع البحث)
         const filteredBookings = computed(() => {
-            if (filterStatus.value === "all") return bookings.value;
-            return bookings.value.filter(
-                (b) => b.status === filterStatus.value
-            );
+            return bookings.value.filter((b) => {
+
+                const matchStatus =
+                    filterStatus.value === "all" ||
+                    b.status === filterStatus.value;
+
+                const query = searchQuery.value.toLowerCase();
+
+                const matchSearch =
+                    !query ||
+                    b.fullName?.toLowerCase().includes(query) ||
+                    b.email?.toLowerCase().includes(query) ||
+                    b.phone?.includes(query);
+
+                return matchStatus && matchSearch;
+            });
         });
 
-        // 📞 طرق التواصل
+        // 📊 Pie Chart
         const contactMethodStats = computed(() => {
             const stats = { email: 0, whatsapp: 0, phone: 0 };
 
@@ -121,7 +127,6 @@ createApp({
             return stats;
         });
 
-        // 📊 Pie Chart
         const renderContactChart = () => {
             const ctx = document.getElementById("contactMethodChart");
             if (!ctx) return;
@@ -145,7 +150,7 @@ createApp({
             });
         };
 
-        // 📈 جلب الأسبوع
+        // 📈 الأسبوع
         const fetchWeeklyStats = () => {
             axios.get("/weekly-stats").then((res) => {
                 labels.value = res.data.map((i) => i.date);
@@ -155,7 +160,6 @@ createApp({
             });
         };
 
-        // 📈 Line Chart
         const renderWeeklyChart = () => {
             const ctx = document.getElementById("weeklyChart");
             if (!ctx) return;
@@ -188,16 +192,6 @@ createApp({
             return map[status] || status;
         };
 
-        // 👁️ تفاصيل
-        const viewDetails = (booking) => {
-            alert(`
-الاسم: ${booking.fullName}
-البريد: ${booking.email}
-التحدي: ${booking.challenge}
-الهدف: ${booking.goals}
-            `);
-        };
-
         // 🔘 Pagination
         const nextPage = () => {
             if (currentPage.value < lastPage.value) {
@@ -211,13 +205,12 @@ createApp({
             }
         };
 
-        // 🚀 تحميل أولي
+        // 🚀 تحميل
         onMounted(() => {
             fetchBookings();
             fetchWeeklyStats();
         });
 
-        // 👀 تحديث الشارت
         watch(bookings, () => {
             renderContactChart();
         });
@@ -226,9 +219,9 @@ createApp({
             bookings,
             filterStatus,
             filteredBookings,
+            searchQuery, // 🔥 مهم
 
             totalBookings,
-            uniqueClients,
             contactedCount,
             contactRate,
             pendingCount,
@@ -236,7 +229,6 @@ createApp({
 
             updateStatus,
             getStatusText,
-            viewDetails,
             loadingId,
 
             currentPage,
@@ -245,7 +237,6 @@ createApp({
             prevPage,
 
             cleanPhone,
-            emailLink,
         };
     },
 }).mount("#app");

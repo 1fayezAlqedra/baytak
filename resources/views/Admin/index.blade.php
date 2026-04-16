@@ -85,6 +85,14 @@
                             <button class="filter-btn" :class="{ active: filterStatus === 'completed' }"
                                 @click="filterStatus = 'completed'">مكتمل | Completed</button>
                         </div>
+                       <div class="search-box">
+    <i class="fas fa-search search-icon"></i>
+    <input
+        type="text"
+        v-model="searchQuery"
+        placeholder="ابحث بالاسم أو الإيميل..."
+    >
+</div>
                     </div>
                     <div class="table-wrapper">
                         <table>
@@ -105,13 +113,15 @@
 
                                         <td>
                                             <div style="margin-bottom: 5px;">
-                                                <a :href="'mailto:' + booking.email" style="text-decoration: none; color: #1565c0;">
-                                                    <i class="far fa-envelope"></i> {{ booking.email }}
+                                                <a :href="'mailto:' + booking.email"
+                                                    style="text-decoration: none; color: #1565c0;">
+                                                    <i class="far fa-envelope"></i> {{ booking . email }}
                                                 </a>
                                             </div>
                                             <div style="direction: ltr; text-align: right;">
-                                                <a :href="'https://wa.me/' + cleanPhone(booking.phone)" target="_blank" style="text-decoration: none; color: #2e7d32; font-weight: bold;">
-                                                    <i class="fab fa-whatsapp"></i> {{ booking.phone }}
+                                                <a :href="'https://wa.me/' + cleanPhone(booking.phone)" target="_blank"
+                                                    style="text-decoration: none; color: #2e7d32; font-weight: bold;">
+                                                    <i class="fab fa-whatsapp"></i> {{ booking . phone }}
                                                 </a>
                                             </div>
                                         </td>
@@ -132,41 +142,41 @@
 
                                         <td>
                                             <button @click="updateStatus(booking.id, 'contacted')" style="
-                                                                                                    background: linear-gradient(135deg, #4caf50, #2e7d32) !important;
-                                                                                                    color: white !important;
-                                                                                                    border: none !important;
-                                                                                                    padding: 8px 12px !important;
-                                                                                                    margin: 0 4px;
-                                                                                                    border-radius: 10px;
-                                                                                                    cursor: pointer;
-                                                                                                    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-                                                                                                ">
+                                                                                                        background: linear-gradient(135deg, #4caf50, #2e7d32) !important;
+                                                                                                        color: white !important;
+                                                                                                        border: none !important;
+                                                                                                        padding: 8px 12px !important;
+                                                                                                        margin: 0 4px;
+                                                                                                        border-radius: 10px;
+                                                                                                        cursor: pointer;
+                                                                                                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                                                                                                    ">
                                                 📞
                                             </button>
 
                                             <button @click="updateStatus(booking.id, 'completed')" style="
-                                                                                                    background: linear-gradient(135deg, #2196f3, #1565c0) !important;
-                                                                                                    color: white !important;
-                                                                                                    border: none !important;
-                                                                                                    padding: 8px 12px !important;
-                                                                                                    margin: 0 4px;
-                                                                                                    border-radius: 10px;
-                                                                                                    cursor: pointer;
-                                                                                                    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-                                                                                                ">
+                                                                                                        background: linear-gradient(135deg, #2196f3, #1565c0) !important;
+                                                                                                        color: white !important;
+                                                                                                        border: none !important;
+                                                                                                        padding: 8px 12px !important;
+                                                                                                        margin: 0 4px;
+                                                                                                        border-radius: 10px;
+                                                                                                        cursor: pointer;
+                                                                                                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                                                                                                    ">
                                                 ✔
                                             </button>
 
                                             <button @click="viewDetails(booking)" style="
-                                                                                                    background: linear-gradient(135deg, #ff9800, #ef6c00) !important;
-                                                                                                    color: white !important;
-                                                                                                    border: none !important;
-                                                                                                    padding: 8px 12px !important;
-                                                                                                    margin: 0 4px;
-                                                                                                    border-radius: 10px;
-                                                                                                    cursor: pointer;
-                                                                                                    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-                                                                                                ">
+                                                                                                        background: linear-gradient(135deg, #ff9800, #ef6c00) !important;
+                                                                                                        color: white !important;
+                                                                                                        border: none !important;
+                                                                                                        padding: 8px 12px !important;
+                                                                                                        margin: 0 4px;
+                                                                                                        border-radius: 10px;
+                                                                                                        cursor: pointer;
+                                                                                                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                                                                                                    ">
                                                 👁
                                             </button>
                                         </td>
