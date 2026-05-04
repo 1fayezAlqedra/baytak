@@ -82,12 +82,12 @@ GET	/api/weekly-stats	Fetch analytics data
 📸 Screenshots
 <img width="804" height="716"  width="600" alt="Screenshot 2026-05-04 195558" src="https://github.com/user-attachments/assets/c4943926-455f-4705-8a1a-12e3dfe8fb01" />
 
-<img width="535" height="284"  width="600" alt="Screenshot 2026-05-04 195912" src="https://github.com/user-attachments/assets/e98e43bb-ffe1-4126-adc4-c956bdeeb055" />
-<img width="1377" height="517" alt="Screenshot 2026-05-04 202305" src="https://github.com/user-attachments/assets/73ed541b-201f-4d37-a7b5-048de8865f50" />
-
 
 <img width="793" height="617" width="600" alt="Screenshot 2026-05-04 195609" src="https://github.com/user-attachments/assets/941424e9-f4eb-422e-8083-8dab1ddba325" />
 <img width="1402" height="825"  width="600" alt="Screenshot 2026-05-04 195733" src="https://github.com/user-attachments/assets/a1d0a62b-080a-442e-8a5b-5f060cfa34a0" />
+
+<img width="535" height="284"  width="600" alt="Screenshot 2026-05-04 195912" src="https://github.com/user-attachments/assets/e98e43bb-ffe1-4126-adc4-c956bdeeb055" />
+<img width="1377" height="517" alt="Screenshot 2026-05-04 202305" src="https://github.com/user-attachments/assets/73ed541b-201f-4d37-a7b5-048de8865f50" />
 
 <img width="466" height="794" width="600"  alt="Screenshot 2026-05-04 195648" src="https://github.com/user-attachments/assets/ac91bfb0-178f-4b8c-9257-2d5fb8143422" />
 
